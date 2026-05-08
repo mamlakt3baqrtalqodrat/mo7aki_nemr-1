@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاكي اختبار نمر </title>
+    <title>محاكي اختبار النمر - النسخة المحمية</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root { 
@@ -18,6 +18,7 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
+            /* تم تحديث رابط الصورة هنا */
             background-image: url('https://i.ibb.co/6cqsWSgd/2026-05-09-002517.png');
             background-repeat: no-repeat;
             background-position: center;
@@ -161,7 +162,7 @@
 <body>
 
 <div id="name-screen">
-    <img src="https://i.ibb.co/qYjkGjbD/6cc50c2f-b3ae-4567-9938-c6babc3abd37.jpg" alt="Logo" style="width: 130px; height: 130px; object-fit: cover; margin-bottom: 20px; border-radius: 15px;">
+    <img src="https://i.ibb.co/6cqsWSgd/2026-05-09-002517.png" alt="Logo" style="width: 130px; height: 130px; object-fit: cover; margin-bottom: 20px; border-radius: 15px;">
     <h2 style="color: var(--primary-color); margin: 0 0 10px 0;">نظام محاكاة اختبار النمر</h2>
     <input type="text" id="name-input" placeholder="اكتب اسمك الثلاثي هنا...">
     <button class="btn btn-save" style="width: 100%; max-width: 320px;" onclick="startQuiz()">ابدأ الاختبار</button>
@@ -205,13 +206,12 @@
 <footer>صل على النبي ﷺ</footer>
 
 <script>
+    // تظل بقية وظائف JavaScript كما هي في الكود الأصلي
     const PUBLIC_KEY = "cQYqz70Te8w8308k-"; 
     const SERVICE_ID = "service_alszjvq"; 
     const TEMPLATE_ID = "template_8o5hc72"; 
     emailjs.init(PUBLIC_KEY);
 
-    // مفتاح الإجابات مخفي في مصفوفة مشفرة (تم حذفه من السؤال نفسه)
-    // الإجابات بالترتيب: 0=أ, 1=ب, 2=ج, 3=د
     const _0x_aK = [2,3,2,2,2,3,1,0,3,2,1,3,3,2,2,0,2,1,1,2,2,1,3,3,3,3,0,2,3,2];
 
     const questions = [
@@ -254,7 +254,6 @@
     let timerInterval;
 
     window.onload = () => {
-        // استعادة البيانات المحفوظة
         const savedAnswers = localStorage.getItem('tiger_answers');
         const savedName = localStorage.getItem('tiger_name');
         const savedEndTime = localStorage.getItem('tiger_endtime');
@@ -275,7 +274,6 @@
         if (input.value.trim().length < 3) { alert("أدخل اسمك الثلاثي"); return; }
         userName = input.value.trim();
         
-        // حساب وقت النهاية وحفظه
         const endTime = Date.now() + (30 * 60 * 1000);
         localStorage.setItem('tiger_name', userName);
         localStorage.setItem('tiger_endtime', endTime);
@@ -327,7 +325,7 @@
 
     function selectOption(idx) {
         userAnswers[currentIdx] = idx;
-        localStorage.setItem('tiger_answers', JSON.stringify(userAnswers)); // حفظ عند كل اختيار
+        localStorage.setItem('tiger_answers', JSON.stringify(userAnswers));
         renderQuestion();
         updateStats();
     }
@@ -374,7 +372,7 @@
         const prefixes = ["أ", "ب", "ج", "د"];
 
         questions.forEach((q, i) => {
-            const correctIdx = _0x_aK[i]; // الإجابة الصحيحة من المصفوفة المخفية
+            const correctIdx = _0x_aK[i];
             const isCorrect = userAnswers[i] === correctIdx;
             if (isCorrect) correctCount++;
             details += `س${i+1}: (${prefixes[userAnswers[i]] || 'لم يحل'}) | ${isCorrect ? '✅' : '❌'}\n`;
@@ -387,7 +385,6 @@
             user_score: scorePercent + "%",
             user_details: details
         }).then(() => {
-            // مسح التخزين المحلي بعد النجاح
             localStorage.clear();
             document.getElementById('sidebar').style.display = 'none';
             document.getElementById('main-content').innerHTML = `
