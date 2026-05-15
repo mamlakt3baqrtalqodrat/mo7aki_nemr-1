@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاكي اختبار النمر - النسخة المحمية</title>
+    <title>محاكي اختبار نمر - النسخة المحدثة</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root { 
@@ -14,19 +14,6 @@
             --correct-green: #2ecc71;
         }
         
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://i.ibb.co/qYjkGjbD/6cc50c2f-b3ae-4567-9938-c6babc3abd37.jpg');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 450px;
-            opacity: 0.12;
-            z-index: -1;
-            pointer-events: none;
-        }
-
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background-color: #f7f9fb; 
@@ -35,20 +22,54 @@
             flex-direction: column; 
             height: 100vh; 
             color: var(--text-dark);
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://i.ibb.co/qYjkGjbD/6cc50c2f-b3ae-4567-9938-c6babc3abd37.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 450px;
+            opacity: 0.1;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        #name-screen { 
+            position: fixed; 
+            inset: 0; 
+            background: linear-gradient(to bottom, var(--primary-color) 0%, #ffffff 100%); 
+            z-index: 9999; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column; 
+            padding: 20px;
+        }
+        
+        #name-input { 
+            padding: 15px; width: 100%; max-width: 320px; font-size: 18px; 
+            border: 2px solid var(--primary-color); border-radius: 10px; margin-bottom: 20px; text-align: center;
         }
 
         header { 
             background-color: var(--primary-color); 
             color: white; 
             padding: 12px 25px; 
-            display: flex; 
+            display: none; 
             justify-content: space-between; 
             align-items: center; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             z-index: 10; 
         }
 
-        .main-container { display: flex; flex: 1; overflow: hidden; }
+        .main-container { 
+            display: none; 
+            flex: 1; 
+            overflow: hidden; 
+        }
         
         .sidebar { 
             width: 260px; 
@@ -69,27 +90,6 @@
             text-align: center; 
         }
         .timer-value { font-size: 28px; font-weight: bold; color: #e74c3c; font-family: monospace; }
-
-        .font-controls-sidebar {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 0;
-        }
-        .font-btn-img {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
         .questions-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
         .q-num { 
@@ -125,20 +125,8 @@
             margin-bottom: 10px; 
             display: flex; 
             align-items: center; 
-            transition: 0.2s;
         }
-        .option:hover { background-color: #f0fafa; }
         .option.selected { border: 2px solid var(--primary-color); background-color: #f0fafa; }
-
-        #name-screen { 
-            position: fixed; inset: 0; background: #ffffff; z-index: 2000; 
-            display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 20px;
-        }
-        
-        #name-input { 
-            padding: 15px; width: 100%; max-width: 320px; font-size: 18px; 
-            border: 2px solid var(--primary-color); border-radius: 10px; margin-bottom: 20px; text-align: center;
-        }
 
         .btn { padding: 12px 30px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; }
         .btn-save { background-color: var(--primary-color); color: white; }
@@ -148,36 +136,30 @@
             color: white; 
             text-align: center; 
             padding: 12px; 
-            font-size: 16px; 
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .main-container { flex-direction: column-reverse; }
-            .sidebar { width: auto; border-top: 2px solid #ddd; }
+            display: none; 
         }
     </style>
 </head>
 <body>
 
 <div id="name-screen">
-    <img src="https://i.ibb.co/qYjkGjbD/6cc50c2f-b3ae-4567-9938-c6babc3abd37.jpg" alt="Logo" style="width: 130px; height: 130px; object-fit: cover; margin-bottom: 20px; border-radius: 15px;">
-    <h2 style="color: var(--primary-color); margin: 0 0 10px 0;">نظام محاكاة اختبار النمر</h2>
-    <input type="text" id="name-input" placeholder="اكتب اسمك الثلاثي هنا...">
-    <button class="btn btn-save" style="width: 100%; max-width: 320px;" onclick="startQuiz()">ابدأ الاختبار</button>
+    <img src="https://i.ibb.co/qYjkGjbD/6cc50c2f-b3ae-4567-9938-c6babc3abd37.jpg" alt="Logo" style="width: 130px; margin-bottom: 20px; border-radius: 15px;">
+    <h2>محاكي اختبار نمر</h2>
+    <input type="text" id="name-input" placeholder="اكتب اسمك الثلاثي...">
+    <button class="btn btn-save" style="width: 320px;" onclick="startQuiz()">ابدأ الاختبار</button>
 </div>
 
-<header>
+<header id="main-header">
     <div id="top-answered">المجابة: 0 / 30</div>
-    <div style="font-weight: bold;">محاكي اختبار النمر</div>
-    <div id="user-display">مرحباً</div>
+    <div style="font-weight: bold;">محاكي اختبار نمر</div>
+    <div id="user-display"></div>
 </header>
 
-<div class="main-container">
+<div class="main-container" id="app-body">
     <div class="content" id="main-content">
-        <div class="question-card" id="quiz-ui">
-            <div id="section-title" style="color: var(--primary-color); font-weight: bold; margin-bottom: 8px; font-size: 14px;"></div>
-            <div id="q-text" style="font-weight: bold; margin-bottom: 20px; line-height: 1.6; color: #222; font-size: 18px;"></div>
+        <div class="question-card">
+            <div id="section-title" style="color: var(--primary-color); font-weight: bold; margin-bottom: 8px;"></div>
+            <div id="q-text" style="font-weight: bold; margin-bottom: 20px; font-size: 18px;"></div>
             <div id="options-container"></div>
             <div style="display: flex; justify-content: space-between; margin-top: 25px;">
                 <button class="btn" style="background: #eee;" onclick="prevQuestion()">السابق</button>
@@ -188,115 +170,81 @@
 
     <div class="sidebar" id="sidebar">
         <div class="timer-section">
-            <div style="font-size: 11px; color: #666;">الوقت المتبقي</div>
             <div class="timer-value" id="timer-box">30:00</div>
         </div>
-        
-        <div class="font-controls-sidebar">
-            <button class="font-btn-img" onclick="changeFontSize(2)">+A</button>
-            <button class="font-btn-img" onclick="resetFontSize()">A</button>
-            <button class="font-btn-img" onclick="changeFontSize(-2)">-A</button>
-        </div>
-
         <div class="questions-grid" id="q-grid"></div>
     </div>
 </div>
 
-<footer>صل على النبي ﷺ</footer>
+<footer id="main-footer">صل على النبي ﷺ</footer>
 
 <script>
-    const PUBLIC_KEY = "cQYqz70Te8w8308k-"; 
     const SERVICE_ID = "service_alszjvq"; 
-    const TEMPLATE_ID = "template_8o5hc72"; 
+    const TEMPLATE_ID = "template_h6f7c0s"; 
+    const PUBLIC_KEY = "SVD10ASuh3Lyln1HJ"; 
+    
     emailjs.init(PUBLIC_KEY);
 
-    // مفتاح الإجابات مخفي في مصفوفة مشفرة (تم حذفه من السؤال نفسه)
-    // الإجابات بالترتيب: 0=أ, 1=ب, 2=ج, 3=د
-    const _0x_aK = [2,3,2,2,2,3,1,0,3,2,1,3,3,2,2,0,2,1,1,2,2,1,3,3,3,3,0,2,3,2];
-
+    // تم تحديث الأسئلة بناءً على مدخلاتك الجديدة
     const questions = [
-        { q: "تحمل لوحات السيارات في السعودية 3 حروف و3 ارقام، فكم عدد اللوحات التي تحمل 3 حروف متشابهة و3 ارقام متشابهة وارقامها ليس جميعها متطابقة؟", options: ["2520", "28000", "27720", "27360"] },
-        { q: "يسال اب ابنه كل يوم سؤال، اذا كانت الاجابة صحيحة ياخذ ريالين واذا كانت الاجابة خاطئة ياخذ ريال، وفي نهاية الشهر جمع الابن 47 ريال، ما نسبة الاسئلة التي جاوبها الابن اجابة صحيحة تقريبا؟", options: ["37%", "41%", "43%", "57%"] },
-        { q: "يسال أب ابنه كل يوم سؤال، اذا كانت الاجابة صحيحة ياخذ ريالين واذا كانت الاجابة خاطئة ياخذ ريال، وفي نهاية الشهر جمع الابن 43 ريال، ما نسبة الاسئلة التي جاوبها الابن اجابة صحيحة؟", options: ["37%", "41%", "43%", "45%"] },
-        { q: "إذا كان س³ ل < 0 ، س ل² > 0 ، أي الآتي صحيح؟", options: ["س < 0 ، ل < 0", "س > 0 ، ل < 0", "س < 0 ، ل > 0", "س > 0 ، ل > 0"] },
-        { q: "احمد يعمل يوميا اونلاين في منزله، ولكن بعد كل 4 ايام يعمل يوما حضوريا، بعد كم يوم يتكرر نفس اليوم الذي بدأ فيه الدوام الحضوري اول مرة؟", options: ["20", "30", "35", "48"] },
-        { q: "أوجد الحد التالي: 112، 334، 556، 778، .....", options: ["99", "9000", "9009", "9910"] },
-        { q: "20 معلم و 20 مهندس و 18 طبيب و 17 طالب صرفوا 13200 ريال. إذا كان: 5 معلمين صرفوا مثل 4 مهندسين، 12 مهندس مثل 9 أطباء، 6 أطباء مثل 8 طلاب. كم متوسط صرف كل مهندس؟", options: ["180", "175", "210", "240"] },
-        { q: "(م، ن، ج، ل، f) نقاط في المستوى الإحداثي، إذا كانت ل تقع شرق م وغرب ن، و ج تقع جنوب شرق ن، و م تقع جنوب شرق f، فأي الآتي يقع في أقصى الغرب؟", options: ["ف", "ج", "ن", "ل"] },
-        { q: "تتابع مريم متوسط درجاتها. إذا اختبرت 3 اختبارات وحصلت على درجة في الاختبار التالي سيزيد متوسطها 1، وإذا حصلت على 1 في 3 اختبارات تالية سينخفض 1. ما متوسطها حالياً؟", options: ["4", "5", "6", "7"] },
-        { q: "عدد مكون من خانتين س ص، إذا كان تقريب العدد إلى أقرب 10 يساوي 100، فأي الآتي صحيح؟", options: ["س + ص = 9", "س - ص = 0", "ص - س = 4", "ص - س = 0"] },
-        { q: "نملة في حفرة عمقها 10 متر، كل يوم تصعد 4م وتنزلق 2م، بعد كم يوماً تخرج؟", options: ["8", "9", "10", "11"] },
-        { q: "ما قيمة: (1 + 2 + 3 + ..... + 51) - (2 + 4 + 6 + ..... + 30)؟", options: ["1226", "1236", "1068", "1086"] },
-        { q: "كم عدد يمكن تكوينه من الأرقام (1 ، 2 ، 3 ، 5) بدون تكرار؟", options: ["23", "32", "54", "64"] },
-        { q: "رجل في قطار سرعته 50 كم/س لاحظ قطار بضائع عكس الاتجاه مر كاملاً في 9 ثواني، طول القطار 280 م، ما سرعة قطار البضائع؟", options: ["50", "52", "62", "112"] },
-        { q: "المتقدمين للتطعيم 5400، أخذ التطعيم 20%. كم نسبة من يأخذ التطعيم ممن لم يأخذوا ليكون نصف عدد المتقدمين قد أخذ التطعيم؟", options: ["25%", "33%", "37.5%", "50%"] },
-        { q: "التناظر اللفظي - مطر:نبات", options: ["عقل:علم", "جهل فشل", "مدرسة:اجتهاد", "شهادة:نجاح"] },
-        { q: "التناظر اللفظي - عبارة:معنى", options: ["طهارة:صلاة", "سفرة:طاولة", "طاعة:ثواب"] },
-        { q: "التناظر اللفظي - ورق : حلي", options: ["ماء : ارتواء", "قمح : خبز", "زهر : رحيق", "عسل : نحل"] },
-        { q: "التعليم الإلكتروني عن طريق.....من الوسائل....في هذا العصر.", options: ["الحاسب-التقليدية", "الإنترنت-التقنية", "المذياع-الحديثة", "الإنترنت-التقليدية"] },
-        { q: "إذا أمكنك توصيل فكرتك في.....لا تجعلها في......", options: ["جملة-حروف", "كتاب-صفحات", "كلمة-صفحة", "صفحة-كتاب"] },
-        { q: "كل شيء ........ تنساه إلا ما ........ .", options: ["أدرسته - أتقنته", "قرأته - حفظته", "سمعته - فهمته", "تعلمته - أتقنته"] },
-        { q: "الخطأ السياقي - لا يتحقق الوفاء الا بالغدر، وإذا كان الغدر موجوداً فإن ثقة الناس ببعضهم عجز.", options: ["الغدر", "ببعضهم", "الوفاء", "فالثقة"] },
-        { q: "الخطأ السياقي - معلم نفسه ومؤدبها أحق بالإجلال من معلم ذاته ومؤدبها.", options: ["نفسه", "أحق", "بالإستحقاق", "ذاته"] },
-        { q: "الخطأ السياقي - الحقيقة بنت البحث وتفضل في يد المناظرات.", options: ["الحقيقة", "البحث", "تفضل", "يد"] },
-        { q: "المفردة الشاذة - حدد الكلمة المختلفة:", options: ["شعر", "قصيدة", "ديوان", "قصة"] },
-        { q: "المفردة الشاذة - حدد الكلمة المختلفة:", options: ["محسن", "كريم", "شجاع", "سخي"] },
-        { q: "المفردة الشاذة - حدد الكلمة المختلفة:", options: ["الذخيرة", "القنبلة", "البندقية", "الصاروخ"] },
-        { q: "المقصود بـ ( التنزه في عقول الناس ) هو:", options: ["مرافقة البسطاء", "التحدث مع الناس", "قراءة ما يكتبونه"] },
-        { q: "من خلال النص (توانيت في أوان التعلم...) سبب الأنفة هو:", options: ["التكبر", "العلم الغزير", "احتقار المسألة", "الحياء"] },
-        { q: "(إني ميت وأنهم لميتون) تعتبر:", options: ["من الفأل", "امتثال", "اقتباس", "يأس"] }
+        // القسم الكمي
+        { q: "سؤال 1 (كمي)", options: ["×", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 2 (كمي)", options: ["س²", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 3 (كمي)", options: ["3", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 4 (كمي)", options: ["5000", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 5 (كمي)", options: ["المعطيات غير كافية", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 6 (كمي)", options: ["المعطيات غير كافية", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 7 (كمي)", options: ["٨", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 8 (كمي)", options: ["٦", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 9 (كمي)", options: ["\\frac{23}{36}", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 10 (كمي)", options: ["٢", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 11 (كمي)", options: ["٥", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 12 (كمي)", options: ["خالد", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 13 (كمي)", options: ["٦", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 14 (كمي)", options: ["١٥٠كلم", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 15 (كمي)", options: ["٢٣٥٠", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        
+        // القسم اللفظي
+        { q: "سؤال 1 (لفظي)", options: ["مصافحة: سلام", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 2 (لفظي)", options: ["توكل :تردد", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 3 (لفظي)", options: ["مكتبه : قراءه", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 4 (لفظي)", options: ["بالعدل-بالتواضع", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 5 (لفظي)", options: ["المعده-الدواء", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 6 (لفظي)", options: ["خفه-قوه", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 7 (لفظي)", options: ["اختفاء", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 8 (لفظي)", options: ["ارقد", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 9 (لفظي)", options: ["مشتبهة", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 10 (لفظي)", options: ["وجود بدائل صناعية أخرى ومع ذلك هم لا يستخدمونها", "كثرة وتعدد وسائل الترفيه في المملكة", "وجود بدائل كثيرة للحطب توفرها الدولة", "خيار آخر"] },
+        { q: "سؤال 11 (لفظي)", options: ["ترشيد استهلاك الحطب", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 12 (لفظي)", options: ["وضع قوانين للحد من قطع الأشجار", "حل مشكلة حد الحطب", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 13 (لفظي)", options: ["مطالعه", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 14 (لفظي)", options: ["مناوله", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] },
+        { q: "سؤال 15 (لفظي)", options: ["مصباح", "خيارات أخرى...", "خيارات أخرى...", "خيارات أخرى..."] }
     ];
 
     let currentIdx = 0;
     let userAnswers = new Array(30).fill(null);
     let userName = "";
-    let currentFontSize = 18;
     let timerInterval;
-
-    window.onload = () => {
-        // استعادة البيانات المحفوظة
-        const savedAnswers = localStorage.getItem('tiger_answers');
-        const savedName = localStorage.getItem('tiger_name');
-        const savedEndTime = localStorage.getItem('tiger_endtime');
-
-        if (savedName && savedEndTime) {
-            userName = savedName;
-            userAnswers = JSON.parse(savedAnswers);
-            document.getElementById('user-display').innerText = userName;
-            document.getElementById('name-screen').style.display = 'none';
-            renderQuestion();
-            startTimer(parseInt(savedEndTime));
-            updateStats();
-        }
-    };
 
     function startQuiz() {
         const input = document.getElementById('name-input');
         if (input.value.trim().length < 3) { alert("أدخل اسمك الثلاثي"); return; }
         userName = input.value.trim();
-        
-        // حساب وقت النهاية وحفظه
-        const endTime = Date.now() + (30 * 60 * 1000);
-        localStorage.setItem('tiger_name', userName);
-        localStorage.setItem('tiger_endtime', endTime);
-        localStorage.setItem('tiger_answers', JSON.stringify(userAnswers));
-
-        document.getElementById('user-display').innerText = userName;
         document.getElementById('name-screen').style.display = 'none';
+        document.getElementById('main-header').style.display = 'flex';
+        document.getElementById('app-body').style.display = 'flex';
+        document.getElementById('main-footer').style.display = 'block';
+        document.getElementById('user-display').innerText = userName;
+        const endTime = Date.now() + (30 * 60 * 1000);
         renderQuestion();
         startTimer(endTime);
     }
 
     function startTimer(endTime) {
-        if (timerInterval) clearInterval(timerInterval);
         timerInterval = setInterval(() => {
             const distance = endTime - Date.now();
-            if (distance <= 0) { 
-                clearInterval(timerInterval); 
-                document.getElementById('timer-box').innerText = "00:00";
-                finishQuiz(); 
-                return; 
-            }
+            if (distance <= 0) { clearInterval(timerInterval); finishQuiz(); return; }
             let m = Math.floor(distance / 60000);
             let s = Math.floor((distance % 60000) / 1000);
             document.getElementById('timer-box').innerText = `${m}:${s < 10 ? '0'+s : s}`;
@@ -306,30 +254,18 @@
     function renderQuestion() {
         const q = questions[currentIdx];
         document.getElementById('section-title').innerText = currentIdx < 15 ? "القسم الكمي" : "القسم اللفظي";
-        const qt = document.getElementById('q-text');
-        qt.innerText = `س${currentIdx + 1}: ${q.q}`;
-        qt.style.fontSize = currentFontSize + 'px';
-        
+        document.getElementById('q-text').innerText = `س${currentIdx + 1}: ${q.q}`;
         const container = document.getElementById('options-container');
         container.innerHTML = '';
         const prefixes = ["أ", "ب", "ج", "د"];
-        
         q.options.forEach((opt, i) => {
             const div = document.createElement('div');
             div.className = `option ${userAnswers[currentIdx] === i ? 'selected' : ''}`;
-            div.style.fontSize = (currentFontSize - 2) + 'px';
-            div.innerHTML = `<span style="background:var(--primary-color); color:white; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; margin-left:10px; font-size:12px;">${prefixes[i]}</span> <span>${opt}</span>`;
-            div.onclick = () => { selectOption(i); };
+            div.innerHTML = `<span style="background:var(--primary-color); color:white; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; margin-left:10px; font-size:12px;">${prefixes[i]}</span> ${opt}`;
+            div.onclick = () => { userAnswers[currentIdx] = i; renderQuestion(); updateStats(); };
             container.appendChild(div);
         });
         updateGrid();
-    }
-
-    function selectOption(idx) {
-        userAnswers[currentIdx] = idx;
-        localStorage.setItem('tiger_answers', JSON.stringify(userAnswers)); // حفظ عند كل اختيار
-        renderQuestion();
-        updateStats();
     }
 
     function updateGrid() {
@@ -351,55 +287,42 @@
 
     function nextQuestion() {
         if (currentIdx < 29) { currentIdx++; renderQuestion(); }
-        else { if(confirm("هل انتهيت من الحل وتريد تسليم الاختبار؟")) finishQuiz(); }
+        else { if(confirm("هل تريد تسليم الاختبار؟")) finishQuiz(); }
     }
 
     function prevQuestion() { if (currentIdx > 0) { currentIdx--; renderQuestion(); } }
 
-    function changeFontSize(delta) {
-        currentFontSize += delta;
-        if(currentFontSize < 12) currentFontSize = 12;
-        if(currentFontSize > 36) currentFontSize = 36;
-        renderQuestion();
-    }
-
-    function resetFontSize() { currentFontSize = 18; renderQuestion(); }
-
     function finishQuiz() {
         clearInterval(timerInterval);
-        document.getElementById('main-content').innerHTML = "<div class='question-card' style='text-align:center;'><h2>جاري معالجة نتيجتك...</h2></div>";
-        
-        let correctCount = 0;
         let details = "";
         const prefixes = ["أ", "ب", "ج", "د"];
 
         questions.forEach((q, i) => {
-            const correctIdx = _0x_aK[i]; // الإجابة الصحيحة من المصفوفة المخفية
-            const isCorrect = userAnswers[i] === correctIdx;
-            if (isCorrect) correctCount++;
-            details += `س${i+1}: (${prefixes[userAnswers[i]] || 'لم يحل'}) | ${isCorrect ? '✅' : '❌'}\n`;
+            details += `س${i+1}: (${prefixes[userAnswers[i]] || 'لم يحل'})\n`;
         });
 
-        const scorePercent = Math.round((correctCount / 30) * 100);
-        
+        document.getElementById('sidebar').style.display = 'none';
+        document.getElementById('main-content').innerHTML = `
+            <div class='question-card' style='text-align:center;'>
+                <h2>تم التسليم!</h2>
+                <p>الطالب: ${userName}</p>
+                <p id="mail-status" style="margin-top:15px; color:orange; font-weight:bold;">جاري إرسال الإجابات للإدارة...</p>
+            </div>`;
+
         emailjs.send(SERVICE_ID, TEMPLATE_ID, {
             user_name: userName,
-            user_score: scorePercent + "%",
             user_details: details
-        }).then(() => {
-            // مسح التخزين المحلي بعد النجاح
-            localStorage.clear();
-            document.getElementById('sidebar').style.display = 'none';
-            document.getElementById('main-content').innerHTML = `
-                <div class='question-card' style='text-align:center;'>
-                    <h2 style='color:var(--primary-color)'>تم التسليم بنجاح!</h2>
-                    <p>أحسنت يا <b>${userName}</b>، تم إرسال نتيجتك بنجاح.</p>
-                    <div style='background:#f1f1f1; padding:20px; border-radius:10px; margin-top:15px;'>
-                        <p style='font-size:1.1em;'>درجتك هي: ${correctCount} من 30</p>
-                        <p style='font-size:1.6em; font-weight:bold; color:var(--primary-color);'>النسبة المئوية: %${scorePercent}</p>
-                    </div>
-                </div>`;
-        });
+        }).then(
+            function() {
+                document.getElementById('mail-status').innerText = "تم إرسال الإجابات بنجاح ✅";
+                document.getElementById('mail-status').style.color = "green";
+            },
+            function(error) {
+                alert("فشل الإرسال: " + JSON.stringify(error));
+                document.getElementById('mail-status').innerText = "فشل الإرسال ❌";
+                document.getElementById('mail-status').style.color = "red";
+            }
+        );
     }
 </script>
 </body>
